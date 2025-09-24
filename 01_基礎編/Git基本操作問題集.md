@@ -1,4 +1,3 @@
-ubuntu@krp:~/dev/git-learning-path$ cat 01_基礎編/Git基本操作問題集.md 
 # Git基礎学習完全ガイド
 ## 〜問題集形式で実践的にマスターする〜
 
@@ -16,31 +15,168 @@ ubuntu@krp:~/dev/git-learning-path$ cat 01_基礎編/Git基本操作問題集.md
 ### 🔰 初級レベル（第1-3問）
 **基本操作とブランチ管理**
 
-| 問題 | 学習内容 | 習得スキル |
-|------|----------|-----------|
-| 第1問 | リポジトリ状態確認 | `git status` の完全理解 |
-| 第2問 | ブランチ一覧表示 | `git branch -a` でローカル・リモート確認 |
-| 第3問 | 不要ブランチ削除 | `git branch -D` で強制削除操作 |
+#### 第1問：リポジトリ状態確認
+**問題文：** 現在のGitリポジトリの状態を確認してください。現在いるブランチ、ワーキングツリーの状態、コミット待ちのファイルがあるかどうかを調べるコマンドを実行してください。
+
+**実行コマンド：**
+```bash
+git status
+```
+
+**期待される結果例：**
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+nothing to commit, working tree clean
+```
+
+**習得スキル：** `git status` の完全理解
+
+---
+
+#### 第2問：ブランチ一覧表示
+**問題文：** 現在のリポジトリにあるブランチの一覧を表示してください。ローカルブランチだけでなくリモートブランチも含めて表示してください。
+
+**実行コマンド：**
+```bash
+git branch -a
+```
+
+**期待される結果例：**
+```
+* main
+  test
+  remotes/origin/main
+  remotes/origin/test
+```
+
+**習得スキル：** `git branch -a` でローカル・リモート確認
+
+---
+
+#### 第3問：不要ブランチ削除
+**問題文：** タイプミスしたブランチを削除してください。そのブランチに切り替わっていない状態で削除すること。
+
+**実行コマンド：**
+```bash
+git branch -D [ブランチ名]
+```
+
+**期待される結果例：**
+```
+Deleted branch test-new-feauter (was 43ffde2).
+```
+
+**よくある間違い：**
+- `-d` (小文字) vs `-D` (大文字) の使い分け
+- 現在のブランチは削除できない
+
+**習得スキル：** `git branch -D` で強制削除操作
+
+---
 
 ### 🚀 中級レベル（第4-7問）
 **ブランチ切り替えとファイル管理**
 
-| 問題 | 学習内容 | 重要概念 |
-|------|----------|----------|
-| 第4-5問 | ブランチ切り替えの体感 | **ブランチ = 並行世界** の概念習得 |
-| 第6-7問 | ファイル変更とステージング | Git 3段階管理の実践 |
+#### 第4-5問：ブランチ切り替えの体感
+**問題文：** mainブランチからtestブランチに切り替えて、ファイル一覧を確認してください。その後mainブランチに戻って、ファイル構成の違いを確認してください。
 
-**🎯 重要な発見**: 同じディレクトリでもブランチによってファイル構成が変わる！
+**実行コマンド：**
+```bash
+git checkout test
+ls
+git checkout main
+ls
+```
+
+**期待される結果：** ブランチごとにファイル構成が異なることを確認
+
+**重要概念：** **ブランチ = 並行世界** の概念習得
+
+---
+
+#### 第6-7問：ファイル変更とステージング
+**問題文：** testブランチでファイルを編集し、変更をGitで検出してからステージングエリアに追加してください。
+
+**実行コマンド：**
+```bash
+git checkout test
+vi test.yaml  # ファイル編集
+git status    # 変更確認
+git add test.yaml
+git status    # ステージング確認
+```
+
+**期待される結果の変化：**
+```
+# 編集後
+Changes not staged for commit:
+        modified:   test.yaml
+
+# add後
+Changes to be committed:
+        modified:   test.yaml
+```
+
+**習得概念：** Git 3段階管理の実践
+
+---
 
 ### ⭐ 上級レベル（第8-10問）
 **完全なGitワークフロー**
 
+#### 第8問：コミット作成
+**問題文：** ステージングされた変更をコミットしてください。
+
+**実行コマンド：**
 ```bash
-# 実際の開発で毎日使うフロー
-git add test.yaml          # ステージング
-git commit -m "メッセージ"   # コミット
-git push                   # リモートへ送信
+git commit -m "Update test.yaml with new configuration"
+git status
 ```
+
+**期待される結果：**
+```
+[test 2709c88] Update test.yaml with new configuration
+ 1 file changed, 1 insertion(+)
+```
+
+---
+
+#### 第9問：GitHubへのpush
+**問題文：** ローカルの変更をGitHubのtestブランチにpushして、その後の状態を確認してください。
+
+**実行コマンド：**
+```bash
+git push
+git status
+```
+
+**期待される結果：**
+```
+Writing objects: 100% (3/3), 293 bytes | 293.00 KiB/s, done.
+To https://github.com/kurupoo/firstRepository.git
+   43ffde2..2709c88  test -> test
+```
+
+**よくある間違い：**
+- `origin` のスペルミス（`oring`, `orgin` など）
+- upstream未設定エラー
+
+---
+
+#### 第10問：ブランチ間の独立性確認
+**問題文：** mainブランチに切り替えて、testブランチとの違いを確認してください。
+
+**実行コマンド：**
+```bash
+git checkout main
+ls
+git log --oneline -3
+```
+
+**期待される結果：** testブランチで追加したファイルがmainブランチには存在しないことを確認
+
+**重要な理解：** ブランチの独立性の実体験
 
 ---
 
