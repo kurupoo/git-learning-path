@@ -130,3 +130,10 @@ git push                     # 成功！GitHubと完全同期
 
 *Created by: 実践的Git学習プログラム*  
 *Learning Method: 1問1答形式での段階的スキル習得*
+
+## 🎯 中級編学習開始
+
+マージ操作の実践を開始しました！
+- Fast-forwardマージ
+- 3-wayマージ  
+- コンフリクト解決
