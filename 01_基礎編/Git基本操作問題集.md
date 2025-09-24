@@ -1,3 +1,4 @@
+ubuntu@krp:~/dev/git-learning-path$ cat 01_基礎編/Git基本操作問題集.md 
 # Git基礎学習完全ガイド
 ## 〜問題集形式で実践的にマスターする〜
 
